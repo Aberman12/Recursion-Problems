@@ -1,0 +1,107 @@
+var parsed;
+var index = 0;
+
+function string(){
+  var str = "";
+  index++;
+
+  for(index; index < json.length; index++){
+    if(json[index] === '\"'){
+        console.log(str);
+      parsed.push(str);
+            str = "";
+      index++;
+      console.log(json[index]);
+      array();
+    }
+    console.log(json[index]);
+    str += json[index];
+  }
+
+}
+
+function array(){
+var original = index;
+var ar = [];
+function again(){
+  for(index; index < json.length; index++){
+    if(json[index] === '['){
+      index++;
+      console.log(ar);
+    console.log(ar.push([again()]));
+
+    }
+    if(json[index] === ']'){
+  ar = json.slice(original+1, index);
+  console.log(ar);
+  if(ar.length === 0){
+    return [];
+  }
+  ar = ar.split(',');
+  console.log(ar);
+  for(var i = 0; i < ar.length; i++){
+    ar[i] = ar[i].trim();
+  if(ar[i][0] === '\"'){
+   ar[i] = ar[i].slice(1, ar[i].length-1);
+  }
+   else if(ar[i] === 'true'){
+   ar[i] = true;
+  }
+  else if(ar[i] === 'false'){
+   ar[i] = false;
+  }
+   else if(ar[i] === 'null'){
+   ar[i] = null;
+  }
+   else if(!isNaN(ar[i]) && ar[i] !== 'null' && ar[i] !== 'true' && ar[i] !== 'false'){
+    ar[i] = Number(ar[i]);
+  }
+  }
+    break;
+    }
+  }
+}
+again();
+
+console.log(ar);
+
+}
+
+function string(){
+
+}
+function boolean(){
+
+}
+
+
+function object(){
+
+}
+
+if(json[index] === '['){
+array()
+}
+if(json[index] === '{'){
+object();
+}
+
+
+
+
+if(parsed === undefined){
+  if(json[0] === '{'){
+    parsed = {};
+    index++;
+    object();
+  }
+  if(json[0] === '['){
+    parsed = [];
+    index++;
+    array();
+  }
+}
+
+
+
+return parsed;
